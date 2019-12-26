@@ -6,23 +6,23 @@ env:
 jobs:
   build:
     runs-on: ubuntu-latest
-
-    steps:
-    - uses: actions/checkout@v1
     
-    - name: Install Node.js 12.x
-    - uses: actions/setup-node@v1
-      with:
-        node-version: '12.x'
-        
-    - uses: actions/cache@v1
-      id: npm-packages-cache
-      with:
-        path: ~/.npm
-        key: ${{ env.cache-version }}-${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-        restore-keys: |
-          ${{ env.cache-version }}-${{ runner.os }}-node-
-    - name: npm install
-      run: npm i
-    - name: Run test
-      run: npm test
+    steps:
+      - uses: actions/checkout@v1
+
+      - name: Install Node.js 12.x
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '12.x'
+
+      - uses: actions/cache@v1
+        id: npm-packages-cache
+        with:
+          path: ~/.npm
+          key: ${{ env.cache-version }}-${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ env.cache-version }}-${{ runner.os }}-node-
+      - name: npm install
+        run: npm i
+      - name: Run test
+        run: npm test
