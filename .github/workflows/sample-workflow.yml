@@ -27,17 +27,23 @@ jobs:
       - name: Npm install
         run: npm i
 
-      - name: Run test
-        run: npm test
-
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v1
-
       - name: Global install firebase-tools
         run: npm i -g firebase-tools
 
+      - name: Run test
+        run: npm test
+
       - name: Deploy to Firebase Hosting
         run: firebase deploy --only hosting --token=${{ secrets.FIREBASE_TOKEN }}
+
+  # deploy:
+  #   needs: build
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v1
+
+  #     - name: Global install firebase-tools
+  #       run: npm i -g firebase-tools
+
+  #     - name: Deploy to Firebase Hosting
+  #       run: firebase deploy --only hosting --token=${{ secrets.FIREBASE_TOKEN }}
