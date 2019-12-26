@@ -1,23 +1,27 @@
 name: CI
 
 on: [push]
-
+env:
+  cache-version: v1
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v1
+    
+    - name: Install Node.js 12.x
     - uses: actions/setup-node@v1
       with:
         node-version: '12.x'
+        
     - uses: actions/cache@v1
       id: npm-packages-cache
       with:
         path: ~/.npm
-        key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+        key: ${{ env.cache-version }}-${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
         restore-keys: |
-          ${{ runner.os }}-node-
+          ${{ env.cache-version }}-${{ runner.os }}-node-
     - name: npm install
       run: npm i
     - name: Run test
