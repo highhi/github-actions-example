@@ -23,6 +23,9 @@ jobs:
           key: ${{ env.cache-version }}-${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             ${{ env.cache-version }}-${{ runner.os }}-node-
+
+      - name: Global install firebase-tools
+        run: npm i -g firebase-tools
  
       - name: Npm install
         run: npm i
@@ -34,8 +37,5 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     steps:
-      - name: Global install firebase-tools
-        run: npm i -g firebase-tools
-
       - name: Deploy to Firebase Hosting
         run: npm run deploy -- --token=${{ secrets.FIREBASE_TOKEN }}
